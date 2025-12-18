@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="UniFlow-Audio">
+  <meta name="description" content="We propose UniFlow-Audio, a flow-matching-based universal audio generation framework that unifies both TA and NTA tasks within a single NAR model.">
+  <meta name="keywords" content="AI, audio generation, flow matching">
+  <meta name="author" content="Anonymous Author">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="INSTITUTION_OR_LAB_NAME">
+  <meta property="og:title" content="PAPER_TITLE">
+  <meta property="og:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
+  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
+  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
+  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
+  <meta property="article:author" content="FIRST_AUTHOR_NAME">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="KEYWORD1">
+  <meta property="article:tag" content="KEYWORD2">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
+  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
+  <meta name="twitter:title" content="PAPER_TITLE">
+  <meta name="twitter:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
+  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="PAPER_TITLE">
+  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
+  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
+  <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="CONFERENCE_NAME">
+  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>MMEDIT: A Unified Framework for Multi-Type Audio Editing via Multimodal language model</title>
+
+
+  <!-- Critical CSS -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Defer JS -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Page-local styles for audio tables -->
+  <style>
+    /* 全局表格单元格垂直居中 */
+    .samples-table td {
+      vertical-align: middle !important;
+      padding: 1rem 0.8rem !important; /* 调整内边距 */
+      border-bottom: 1px solid #eee;
+    }
+
+    /* === 1. Instruction 格子美化 (重点) === */
+    /* 稍后在 HTML 中把指令格子的 class 改为这个 */
+    .instruction-cell {
+      background-color: #f5f9ff; /* 浅蓝色背景 */
+      border-left: 4px solid #3273dc; /* 左侧深蓝强调条 */
+      color: #2c3e50;
+      font-weight: 600; /* 加粗 */
+      text-align: left !important;
+      vertical-align: middle !important;
+      padding: 1.5rem !important;
+      border-radius: 0 4px 4px 0; /* 右侧圆角 */
+    }
+
+    /* === 2. 类别间距明显 (重点) === */
+    /* 针对每个任务区域 (id="addition", id="removal" 等) */
+    #sample-audio section {
+      margin-bottom: 6rem; /* 增加底部间距 */
+      padding-bottom: 2rem;
+      border-bottom: 2px dashed #dbdbdb; /* 增加虚线分割 */
+    }
+    #sample-audio section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    /* 任务标题 */
+    .task-title {
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      color: #363636;
+      font-weight: 700;
+    }
+
+    /* 任务标题下的简短定义说明 */
+    .task-desc {
+      margin-top: -1.2rem;   /* 把说明往标题靠近一点 */
+      margin-bottom: 1.6rem; /* 和表格拉开舒适距离 */
+      color: #7a7a7a;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* 可选：让标题 + 说明作为一个更稳定的视觉块 */
+    .task-header {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+
+    /* === 3. 波形图区域优化 (重点：去肿) === */
+    .waveform-img {
+      width: 100%;
+      height: 120px; /* 【关键】强制固定高度，变扁 */
+      object-fit: fill; 
+      border-radius: 4px;
+      margin-top: 4px;
+      opacity: 0.9;
+      /* 去掉原来的 border 和 padding，显得更清爽 */
+    }
+
+    /* 音频播放器微调 */
+    audio {
+      width: 100%;
+    }
+
+    /* 表格布局 */
+    .samples-table {
+      table-layout: fixed;
+      width: 100%;
+    }
+    .samples-table th {
+      text-align: center;
+      padding-bottom: 10px;
+      color: #666;
+    }
+</style>
+      <!-- MathJax for LaTeX-style math rendering -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">
+                MMEDIT: A Unified Framework for Multi-Type Audio Editing via Multimodal language model
+              </h1>
+
+              <!-- Anonymous authors for submission -->
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">Anonymous Author</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abstract -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Text-guided audio editing requires modifying specific acoustic events while strictly preserving non-target content. Current approaches generally fall into two paradigms: training-based methods, which are often confined to limited operation types, and training-free methods based on diffusion inversion, which frequently struggle with controllability and signal degradation. To overcome these constraints, we propose MMEdit, a unified, large-model-driven framework that significantly expands the scope and precision of audio editing.
+We systematically extend task definitions to cover a comprehensive range of operations,including addition, replacement, removal, reordering, and attribute modification. Furthermore, we construct a scalable synthetic pipeline to generate large-scale paired data with fine-grained event-level annotations.
+To capture complex editing semantics, we integrate the Qwen2-Audio encoder with an MMDiT-based generator, achieving precise cross-modal alignment and localized editing. Experiments demonstrate that our approach delivers superior edit localization, robust instruction following, and high fidelity in non-edited regions, highlighting the potential of large-scale models for controllable audio editing. 
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scalable Data Pipeline -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns">
+          <div class="column">
+            <h2 class="title is-3 has-text-centered">Scalable Data Pipeline</h2>
+            <div class="content has-text-justified">
+
+              <div class="has-text-centered">
+                <figure class="image">
+                  <img src="static/images/pipeline.png" alt="Data Construction Pipeline"
+                       style="width: 100%; height: auto; margin-bottom: 20px; max-width: 1000px; display: inline-block;">
+                </figure>
+              </div>
+
+              <div class="content">
+                <p>
+                  To overcome the data scarcity bottleneck in audio editing, we construct a large-scale synthetic dataset comprising over
+                  <strong>one million triplets</strong>.
+                  Our pipeline begins by extracting clean, event-level segments from <em>AudioCaps</em> using automated grounding (TAG) and semantic filtering (CLAP).
+                  We then leverage the <strong>Scaper library</strong> to compositionally synthesize these segments into realistic soundscapes.
+                  This allows us to systematically simulate six diverse editing operations:
+                  <strong>Addition, Removal, Replacement, Reordering, Loudness Adjustment, and Speed Modification</strong>.
+                  This automated process ensures fine-grained event-level annotations, forming a solid foundation for training controllable editing models.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method Overview -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns">
+          <div class="column">
+            <h2 class="title is-3 has-text-centered">Method Overview</h2>
+            <div class="content has-text-justified">
+
+              <div class="has-text-centered">
+                <figure class="image">
+                  <img src="static/images/mmedit_method.png" alt="MMEdit Architecture"
+                       style="width: 150%; height: auto; margin-bottom: 20px;">
+                </figure>
+              </div>
+
+              <div class="content">
+                <p>
+                  <strong>MMEdit</strong> synergizes the <strong>Qwen2-Audio</strong> multimodal encoder with an <strong>MMDiT-based</strong> diffusion backbone.
+                  Unlike standard approaches, it leverages <strong>joint attention mechanisms</strong> to facilitate deep, token-level interaction between audio latents and editing instructions.
+                  The model employs the powerful Qwen2-Audio for joint understanding of audio and instruction, generating the high-level multi-modal representation $\mathbf{H}$.
+    Then the MMDiT backbone predicts the audio latent $\mathbf{z}_0$ from a Gaussian latent conditioned on $\mathbf{H}$ and the latent of the source audio $\mathbf{z}_\mathrm{in}$.
+    Finally, the VAE decoder converts $\mathbf{z}_\mathrm{0}$ to the edited audio.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== Samples (WIDER + NO TABLE-CONTAINER) ====================== -->
+    <section class="section hero is-light" id="sample-audio">
+      <div class="container is-widescreen">
+        <h2 class="title is-3 has-text-centered">🎧 Audio Editing Samples</h2>
+        <div class="content has-text-centered">
+          <p>Select a task below to view examples.</p>
+        </div>
+
+        <div class="buttons is-centered" style="margin-bottom: 3rem;">
+          <a class="button is-dark is-rounded" href="#addition">Addition</a>
+          <a class="button is-dark is-rounded" href="#removal">Removal</a>
+          <a class="button is-dark is-rounded" href="#replacement">Replacement</a>
+          <a class="button is-dark is-rounded" href="#reordering">Reordering</a>
+          <a class="button is-dark is-rounded" href="#loudness"> Loudness Adjustment</a>
+          <a class="button is-dark is-rounded" href="#speed">Speed Modification</a>
+        </div>
+
+        <!-- =============== 1. Addition (WITH BASELINES, NO WAVEFORM/谱图) =============== -->
+        <section id="addition">
+          <div class="task-header">
+            <h3 class="title is-4 task-title">➕ 1. Addition</h3>
+            <p class="task-desc">
+              Insert a new target sound into the audio while preserving the original context.
+            </p>
+          </div>
+
+          <table class="table is-striped is-fullwidth is-hoverable samples-table">
+            <thead>
+              <tr>
+                <th style="width: 18%;">Instruction</th>
+                <th style="width: 20.5%;">Source Audio</th>
+                <th style="width: 20.5%;">AUDIT</th>
+                <th style="width: 20.5%;">AudioEditer</th>
+                <th style="width: 20.5%;">MMEdit(ours)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="instruction-cell">Mix in dog barking in the middle.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/add_audiocaps_1.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/add_audiocaps_1.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/add_audiocaps_1.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/add/add_audiocaps_1.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Include typing as a background sound.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/add_audiocaps_6.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/add_audiocaps_6.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/add_audiocaps_6.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/add/add_audiocaps_6.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Incorporate gunshots fired three times from 3.2s to 10.0s.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/add_audiocaps_10.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/add_audiocaps_10.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/add_audiocaps_10.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/add/add_audiocaps_10.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+              <tr>
+                <td class="instruction-cell">Insert a pig oinks repeatedly sound in the middle.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/add_fore_042246.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/add_fore_042246.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/add_fore_042246.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/add/add_fore_042246.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+              <tr>
+                <td class="instruction-cell">Mix in loud train horn into the background.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/add_back_002373.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/add_back_002373.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/add_back_002373.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/add/add_back_002373.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- =============== 2. Removal (WITH BASELINES, NO WAVEFORM/谱图) =============== -->
+        <section id="removal">
+          <div class="task-header">
+            <h3 class="title is-4 task-title">➖ 2. Removal</h3>
+            <p class="task-desc">
+              Remove a specified sound event and keep the remaining audio natural and unchanged.
+            </p>
+          </div>
+          
+
+          <table class="table is-striped is-fullwidth is-hoverable samples-table">
+            <thead>
+              <tr>
+                <th style="width: 18%;">Instruction</th>
+                <th style="width: 20.5%;">Source Audio</th>
+                <th style="width: 20.5%;">AUDIT</th>
+                <th style="width: 20.5%;">Audioediter</th>
+                <th style="width: 20.5%;">MMEdit(Ours)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="instruction-cell">Eliminate male giving a speech from the audio.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/drop1_013146.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/drop1_013146.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/drop1_013146.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/drop/drop1_013146.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Remove the dog barking.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/drop_audiocaps_1.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/drop_audiocaps_1.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/drop_audiocaps_1.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/drop/drop_audiocaps_1.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Silence the sound of a person is snoring loudly.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/drop_back_015111.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/drop_back_015111.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/drop_back_015111.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/drop/drop_back_015111.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Erase the sound of rain falling from the background.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/drop_audiocaps_5.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/drop_audiocaps_5.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/drop_audiocaps_5.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/drop/drop_audiocaps_5.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- =============== 3. Replacement (WITH BASELINES, NO WAVEFORM/谱图) =============== -->
+        <section id="replacement">
+          <div class="task-header">
+            <h3 class="title is-4 task-title">🔄 3. Replacement</h3>
+            <p class="task-desc">
+              Replace a target sound with a new one at the same time region while preserving the background.
+            </p>
+          </div>
+          
+
+          <table class="table is-striped is-fullwidth is-hoverable samples-table">
+            <thead>
+              <tr>
+                <th style="width: 18%;">Instruction</th>
+                <th style="width: 20.5%;">Source Audio</th>
+                <th style="width: 20.5%;">AUDIT</th>
+                <th style="width: 20.5%;">Audioediter</th>
+                <th style="width: 20.5%;">MMEdit(Ours)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="instruction-cell">Take the sound of Quack and turn it into Bell.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/replace_time_001971.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/replace_time_001971.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/replace_time_001971.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/replace/replace_time_001971.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Replace the electric shaver sound with a busy signal.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/replace_audiocaps_10.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/replace_audiocaps_10.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/replace_audiocaps_10.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/replace/replace_audiocaps_10.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Swap the male voice on the dispatch radio for a car revving.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/replace_093574.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/replace_093574.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/replace_093574.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/replace/replace_093574.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Find the goat bleats and change it to laughing from an individual.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/replace_one_000907.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audit/replace_one_000907.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/audioediter/replace_one_000907.wav" type="audio/wav"></audio>
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/replace/replace_one_000907.wav" type="audio/wav"></audio>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- =============== 4. Reordering (NO BASELINES, KEEP WAVEFORM) =============== -->
+        <section id="reordering">
+          <div class="task-header">
+            <h3 class="title is-4 task-title">🔀 4. Reordering</h3>
+            <p class="task-desc">
+              Change the temporal order of specified events without altering their content.
+            </p>
+          </div>
+          
+
+          <table class="table is-striped is-fullwidth is-hoverable samples-table">
+            <thead>
+              <tr>
+                <th style="width: 22%;">Instruction</th>
+                <th style="width: 39%;">Source Audio</th>
+                <th style="width: 39%;">MMEdit(Ours)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="instruction-cell">Swap the order of a man speaking and a drilling sound.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/reorder_audiocaps_1.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_reorder_audiocaps_1.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/reorder/reorder_audiocaps_1.wav" type="audio/wav"></audio>
+                  <img src="static/images/reorder/wave_reorder_audiocaps_1.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Swap the order of a person types on a computer keyboard quietly and emergency sirens sound.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/reorder_audiocaps_9.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_reorder_audiocaps_9.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/reorder/reorder_audiocaps_9.wav" type="audio/wav"></audio>
+                  <img src="static/images/reorder/wave_reorder_audiocaps_9.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Make a vehicle with a siren play before children cry together.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/order2_047140.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_order2_047140.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/reorder/order2_047140.wav" type="audio/wav"></audio>
+                  <img src="static/images/reorder/wave_order2_047140.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Reorder the static-filled speech and the fast sewing machine noise.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/order2_048122.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_order2_048122.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/reorder/order2_048122.wav" type="audio/wav"></audio>
+                  <img src="static/images/reorder/wave_order2_048122.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- =============== 5. Loudness (NO BASELINES, KEEP WAVEFORM) =============== -->
+        <section id="loudness">
+          <div class="task-header">
+            <h3 class="title is-4 task-title">🔊 5. Loudness Adjustment</h3>
+            <p class="task-desc">
+              Increase or decrease the volume of a target event while keeping other sounds unchanged.
+            </p>
+          </div>
+          
+
+          <table class="table is-striped is-fullwidth is-hoverable samples-table">
+            <thead>
+              <tr>
+                <th style="width: 22%;">Instruction</th>
+                <th style="width: 39%;">Source Audio</th>
+                <th style="width: 39%;">MMEdit(Ours)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="instruction-cell">Turn down the volume of a bell ringing.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/loud_audiocaps_5.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_loud_audiocaps_5.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/loud/loud_audiocaps_5.wav" type="audio/wav"></audio>
+                  <img src="static/images/loud/wave_loud_audiocaps_5.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Turn up the sounds of race cars rev in the distance.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/loud_audiocaps_7.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_loud_audiocaps_7.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/loud/loud_audiocaps_7.wav" type="audio/wav"></audio>
+                  <img src="static/images/loud/wave_loud_audiocaps_7.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Soften the dog barking.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/loud_audiocaps_1.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_loud_audiocaps_1.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/loud/loud_audiocaps_1.wav" type="audio/wav"></audio>
+                  <img src="static/images/loud/wave_loud_audiocaps_1.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Turn up the volume of the woman speaking.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/loud_audiocaps_4.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_loud_audiocaps_4.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/loud/loud_audiocaps_4.wav" type="audio/wav"></audio>
+                  <img src="static/images/loud/wave_loud_audiocaps_4.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- =============== 6. Speed (NO BASELINES, KEEP WAVEFORM) =============== -->
+        <section id="speed">
+          <div class="task-header">
+            <h3 class="title is-4 task-title">⏩ 6. Speed Modification</h3>
+            <p class="task-desc">
+              Speed up or slow down a target event, with its duration adjusted accordingly, while preserving overall audio coherence.
+            </p>
+          </div>
+          
+
+          <table class="table is-striped is-fullwidth is-hoverable samples-table">
+            <thead>
+              <tr>
+                <th style="width: 22%;">Instruction</th>
+                <th style="width: 39%;">Source Audio</th>
+                <th style="width: 39%;">MMEdit(Ours)</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td class="instruction-cell">Slow down bell considerably.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/speed_audiocaps_10.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_speed_audiocaps_10.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/speed/speed_audiocaps_10.wav" type="audio/wav"></audio>
+                  <img src="static/images/speed/wave_speed_audiocaps_10.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+              <tr>
+                <td class="instruction-cell">Halve the duration of toilet flushing.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/speed_audiocaps_3.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_speed_audiocaps_3.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/speed/speed_audiocaps_3.wav" type="audio/wav"></audio>
+                  <img src="static/images/speed/wave_speed_audiocaps_3.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+
+              
+
+              <tr>
+                <td class="instruction-cell">Extend train horn duration by 20%.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/speed_time_002772.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_speed_time_002772.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/speed/speed_time_002772.wav" type="audio/wav"></audio>
+                  <img src="static/images/speed/wave_speed_time_002772.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+
+              <tr>
+                <td class="instruction-cell">Speed up the sound of housefly.</td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/raw/speed_time_005838.wav" type="audio/wav"></audio>
+                  <img src="static/images/raw/wave_speed_time_005838.png" class="waveform-img" alt="Waveform">
+                </td>
+                <td class="audio-cell">
+                  <audio controls><source src="static/audios/speed/speed_time_005838.wav" type="audio/wav"></audio>
+                  <img src="static/images/speed/wave_speed_time_005838.png" class="waveform-img" alt="Waveform">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </div>
+    </section>
+
+
+    <!-- BibTeX -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-header">
+          <h2 class="title">BibTeX</h2>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+            <i class="fas fa-copy"></i>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre id="bibtex-code"><code>@article{YourPaperKey2024,
+  title={Your Paper Title Here},
+  author={First Author and Second Author and Third Author},
+  journal={Conference/Journal Name},
+  year={2024},
+  url={https://your-domain.com/your-project-page}
+}</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+              which was adopted from the
+              <a href="https://nerfies.github.io" target="_blank">Nerfies</a>
+              project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br>
+              This website is licensed under a
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                Creative Commons Attribution-ShareAlike 4.0 International License
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
