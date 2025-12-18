@@ -173,6 +173,16 @@
       padding-bottom: 10px;
       color: #666;
     }
+    .publication-authors .author-block {
+      margin: 0 0.15rem;
+      white-space: nowrap;
+    }
+
+    .publication-links .link-block {
+      margin: 0 0.25rem;
+      display: inline-block;
+    }
+
 </style>
       <!-- MathJax for LaTeX-style math rendering -->
 <script>
@@ -208,8 +218,74 @@
               </h1>
 
               <!-- Anonymous authors for submission -->
-              <div class="is-size-5 publication-authors">
-                <span class="author-block">Anonymous Author</span>
+              <!-- Authors -->
+              <div class="is-size-5 publication-authors" style="margin-top: 0.6rem;">
+                <span class="author-block">
+                  Ye Tao<sup>†1,2</sup>,
+                </span>
+                <span class="author-block">
+                  Xuenan Xu<sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  Wen Wu<sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  Shuai Wang<sup>3</sup>,
+                </span>
+                <span class="author-block">
+                  Mengyue Wu<sup>1</sup>,
+                </span>
+                <span class="author-block">
+                  Chao Zhang<sup>*2</sup>
+                </span>
+              </div>
+
+              <!-- Affiliations -->
+              <div class="is-size-6 publication-affiliations" style="margin-top: 0.5rem; color: #555;">
+                <div><sup>1</sup> MoE Key Lab of Artificial Intelligence, X-LANCE Lab, Shanghai Jiao Tong University</div>
+                <div><sup>2</sup> Shanghai AI Laboratory</div>
+                <div><sup>3</sup> Nanjing University</div>
+              </div>
+
+              <!-- Footnotes -->
+              <div class="is-size-7" style="margin-top: 0.6rem; color: #666;">
+                <div><sup>†</sup> Work done partially during internship at Shanghai AI Lab.</div>
+                <div><sup>*</sup> Corresponding author.</div>
+              </div>
+
+              <!-- Links -->
+              <div class="publication-links" style="margin-top: 1.2rem;">
+                <span class="link-block">
+                  <a href="https://github.com/ty0402/MMEdit" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/CocoBro/MMEdit" class="external-link button is-normal is-rounded is-link" target="_blank" rel="noopener">
+                    <span class="icon"><i class="ai ai-huggingface"></i></span>
+                    <span>Hugging Face</span>
+                  </a>
+                </span>
+
+                <!-- 可选：arXiv / PDF -->
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" class="external-link button is-normal is-rounded is-info" target="_blank" rel="noopener">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <!-- 可选：Demo -->
+                <!--
+                <span class="link-block">
+                  <a href="https://your-demo-link" class="external-link button is-normal is-rounded is-primary" target="_blank" rel="noopener">
+                    <span class="icon"><i class="fas fa-play"></i></span>
+                    <span>Demo</span>
+                  </a>
+                </span>
+                -->
               </div>
 
             </div>
